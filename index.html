@@ -157,7 +157,7 @@
     display: flex;
     flex-direction: column;
     align-items: center;
-    gap: 12px;
+    gap: 10px;
     position: relative;
     border: 3px solid transparent;
     transition: border-color 0.2s, transform 0.2s;
@@ -171,47 +171,65 @@
 
   .person-card:hover { transform: translateY(-4px); border-color: var(--accent2); }
 
-  .avatar-wrap {
-    width: 100px; height: 100px;
+  /* ── MUÑECO DE PALITOS ── */
+  .stickman-wrap {
+    position: relative;
+    width: 100px;
+    height: 160px;
+    cursor: pointer;
+    flex-shrink: 0;
+  }
+
+  .stickman-wrap:hover .avatar-hint { opacity: 1; }
+
+  .face-circle {
+    position: absolute;
+    top: 0; left: 50%;
+    transform: translateX(-50%);
+    width: 60px; height: 60px;
     border-radius: 50%;
     overflow: hidden;
-    border: 4px solid var(--accent2);
+    border: 3.5px solid var(--accent2);
     background: #f0f0f0;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    cursor: pointer;
-    position: relative;
-    flex-shrink: 0;
+    z-index: 2;
     transition: border-color 0.2s;
   }
 
-  .avatar-wrap:hover { border-color: var(--accent4); }
+  .stickman-wrap:hover .face-circle { border-color: var(--accent4); }
 
-  .avatar-wrap img {
+  .face-circle img {
     width: 100%; height: 100%;
     object-fit: cover;
-    filter: saturate(0) contrast(1.1) brightness(1.05);
-    mix-blend-mode: multiply;
+    display: block;
   }
 
-  .avatar-default { width: 80px; height: 80px; }
+  .face-placeholder {
+    width: 100%; height: 100%;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 1.8rem;
+  }
+
+  .stickman-svg {
+    position: absolute;
+    top: 52px; left: 50%;
+    transform: translateX(-50%);
+    width: 90px; height: 110px;
+  }
 
   .avatar-hint {
     position: absolute;
     bottom: 0; left: 0; right: 0;
-    background: rgba(0,0,0,0.45);
+    background: rgba(0,0,0,0.5);
     color: #fff;
-    font-size: 0.65rem;
+    font-size: 0.6rem;
     font-weight: 800;
     text-align: center;
-    padding: 4px 0;
+    padding: 3px 0;
     opacity: 0;
     transition: opacity 0.2s;
-    border-radius: 0 0 50px 50px;
+    border-radius: 0 0 8px 8px;
   }
 
-  .avatar-wrap:hover .avatar-hint { opacity: 1; }
   .hidden-input { display: none; }
 
   .person-name {
@@ -320,10 +338,7 @@
   }
   .saved-badge.show { opacity: 1; transform: translateY(0); }
 
-  .reset-btn-wrap {
-    text-align: center;
-    margin-top: 24px;
-  }
+  .reset-btn-wrap { text-align: center; margin-top: 24px; }
 
   @media (max-width: 600px) {
     h1 { font-size: 2rem; }
@@ -385,7 +400,6 @@
   const STORAGE_KEY = 'gastos_app_data';
   let people = [];
 
-  // ── GUARDAR Y CARGAR ──────────────────────────────
   function guardar() {
     localStorage.setItem(STORAGE_KEY, JSON.stringify(people));
     mostrarBadge();
@@ -412,7 +426,6 @@
     renderAll();
   }
 
-  // ── LÓGICA ────────────────────────────────────────
   function agregarPersona() {
     const nombre = document.getElementById('inputNombre').value.trim();
     const monto  = parseFloat(document.getElementById('inputMonto').value) || 0;
@@ -495,28 +508,37 @@
     });
   }
 
-  function svgCaricatura(color) {
+  function stickmanHTML(p) {
+    const c = p.color;
+    const fotoContent = p.foto
+      ? `<img src="${p.foto}" alt="${p.nombre}">`
+      : `<div class="face-placeholder">🙂</div>`;
+
     return `
-    <svg class="avatar-default" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
-      <ellipse cx="50" cy="95" rx="28" ry="6" fill="rgba(0,0,0,0.08)"/>
-      <rect x="30" y="68" width="40" height="30" rx="14" fill="${color}" opacity="0.85"/>
-      <rect x="43" y="60" width="14" height="14" rx="5" fill="#ffcba4"/>
-      <ellipse cx="50" cy="48" rx="24" ry="26" fill="#ffcba4"/>
-      <ellipse cx="26" cy="48" rx="5" ry="7" fill="#ffcba4"/>
-      <ellipse cx="74" cy="48" rx="5" ry="7" fill="#ffcba4"/>
-      <ellipse cx="50" cy="24" rx="22" ry="12" fill="${color}"/>
-      <rect x="28" y="24" width="44" height="10" fill="${color}"/>
-      <ellipse cx="41" cy="46" rx="5" ry="6" fill="white"/>
-      <ellipse cx="59" cy="46" rx="5" ry="6" fill="white"/>
-      <circle cx="42" cy="47" r="3" fill="#333"/>
-      <circle cx="60" cy="47" r="3" fill="#333"/>
-      <circle cx="43" cy="46" r="1" fill="white"/>
-      <circle cx="61" cy="46" r="1" fill="white"/>
-      <ellipse cx="50" cy="54" rx="3" ry="2" fill="#e8a87c"/>
-      <path d="M42 60 Q50 67 58 60" stroke="#c96a2e" stroke-width="2.5" fill="none" stroke-linecap="round"/>
-      <ellipse cx="37" cy="57" rx="5" ry="3" fill="#ffb3b3" opacity="0.5"/>
-      <ellipse cx="63" cy="57" rx="5" ry="3" fill="#ffb3b3" opacity="0.5"/>
-    </svg>`;
+      <div class="stickman-wrap" onclick="abrirFoto(${p.id})" title="Clic para subir foto">
+        <div class="face-circle">${fotoContent}</div>
+        <svg class="stickman-svg" viewBox="0 0 90 110" xmlns="http://www.w3.org/2000/svg">
+          <!-- cuello -->
+          <line x1="45" y1="0" x2="45" y2="12" stroke="${c}" stroke-width="4" stroke-linecap="round"/>
+          <!-- cuerpo -->
+          <line x1="45" y1="12" x2="45" y2="60" stroke="${c}" stroke-width="4" stroke-linecap="round"/>
+          <!-- brazo izq -->
+          <line x1="45" y1="22" x2="15" y2="45" stroke="${c}" stroke-width="4" stroke-linecap="round"/>
+          <!-- brazo der -->
+          <line x1="45" y1="22" x2="75" y2="45" stroke="${c}" stroke-width="4" stroke-linecap="round"/>
+          <!-- pierna izq -->
+          <line x1="45" y1="60" x2="22" y2="95" stroke="${c}" stroke-width="4" stroke-linecap="round"/>
+          <!-- pierna der -->
+          <line x1="45" y1="60" x2="68" y2="95" stroke="${c}" stroke-width="4" stroke-linecap="round"/>
+          <!-- pie izq -->
+          <line x1="22" y1="95" x2="10" y2="100" stroke="${c}" stroke-width="3.5" stroke-linecap="round"/>
+          <!-- pie der -->
+          <line x1="68" y1="95" x2="80" y2="100" stroke="${c}" stroke-width="3.5" stroke-linecap="round"/>
+        </svg>
+        <div class="avatar-hint">📷 Subir foto</div>
+        <input type="file" id="file-${p.id}" class="hidden-input" accept="image/*"
+               onchange="cargarFoto(${p.id}, this)">
+      </div>`;
   }
 
   function formatMoney(n) {
@@ -559,20 +581,11 @@
         ? `<span style="color:var(--accent)">Le falta: ${formatMoney(Math.abs(diferencia))}</span>`
         : `<span style="color:var(--muted)">Está justo ✓</span>`;
 
-      const avatarContent = p.foto
-        ? `<img src="${p.foto}" alt="${p.nombre}">`
-        : svgCaricatura(p.color);
-
       const card = document.createElement('div');
       card.className = 'person-card';
       card.innerHTML = `
         <button class="delete-btn" onclick="eliminarPersona(${p.id})">✕</button>
-        <div class="avatar-wrap" onclick="abrirFoto(${p.id})" title="Clic para subir foto">
-          ${avatarContent}
-          <div class="avatar-hint">📷 Subir foto</div>
-        </div>
-        <input type="file" id="file-${p.id}" class="hidden-input" accept="image/*"
-               onchange="cargarFoto(${p.id}, this)">
+        ${stickmanHTML(p)}
         <div class="person-name" onclick="editarNombre(${p.id}, this)" title="Clic para editar nombre">
           ${p.nombre} ✏️
         </div>
@@ -625,7 +638,6 @@
     }
   });
 
-  // ── ARRANCAR ──────────────────────────────────────
   cargarDatos();
 </script>
 </body>
