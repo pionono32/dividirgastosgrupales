@@ -181,7 +181,7 @@
 
 <script type="module">
   import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js";
-  import { getAuth, GoogleAuthProvider, signInWithPopup, signOut, onAuthStateChanged }
+  import { getAuth, GoogleAuthProvider, signInWithRedirect, getRedirectResult, signOut, onAuthStateChanged }
     from "https://www.gstatic.com/firebasejs/10.12.0/firebase-auth.js";
   import { getFirestore, doc, getDoc, setDoc }
     from "https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js";
@@ -191,7 +191,7 @@
     authDomain: "pagina-para-dividir-gas.firebaseapp.com",
     projectId: "pagina-para-dividir-gas",
     storageBucket: "pagina-para-dividir-gas.firebasestorage.app",
-    messagingSenderId: "497709394920",
+    messagingSenderId: "497709394928",
     appId: "1:497709394928:web:b5c135eae219590ded0b35"
   };
 
@@ -235,14 +235,32 @@
     people.forEach(p => estadoPart[p.id] = true);
   }
 
-  onAuthStateChanged(auth, u => {
-    currentUser = u;
-    if (u) { catActual = null; renderCategorias(); }
-    else { document.body.className = 'default'; renderLogin(); }
+  // ── AUTH: soporta redirect (Safari) y popup (Chrome/desktop) ──
+  onAuthStateChanged(auth, async u => {
+    if (u) {
+      currentUser = u;
+      catActual = null;
+      renderCategorias();
+    } else {
+      // Intentar recuperar resultado de redirect (Safari)
+      try {
+        const result = await getRedirectResult(auth);
+        if (result && result.user) {
+          currentUser = result.user;
+          catActual = null;
+          renderCategorias();
+          return;
+        }
+      } catch(e) {
+        console.error('Redirect error:', e);
+      }
+      document.body.className = 'default';
+      renderLogin();
+    }
   });
 
-  const loginGoogle  = () => signInWithPopup(auth, new GoogleAuthProvider()).catch(e => alert('Error: ' + e.message));
-  const salir        = () => signOut(auth);
+  const loginGoogle = () => signInWithRedirect(auth, new GoogleAuthProvider());
+  const salir       = () => signOut(auth);
   const mostrarBadge = () => { const b = document.getElementById('savedBadge'); b.classList.add('show'); setTimeout(() => b.classList.remove('show'), 2000); };
 
   function elegirCat(cat) {
@@ -357,7 +375,7 @@
     </div>`;
   }
 
-  const fmt  = n  => '$' + n.toLocaleString('es-AR', { minimumFractionDigits:2, maximumFractionDigits:2 });
+  const fmt    = n  => '$' + n.toLocaleString('es-AR', { minimumFractionDigits:2, maximumFractionDigits:2 });
   const nombre = id => people.find(p => p.id===id)?.nombre || '?';
   const color  = id => people.find(p => p.id===id)?.color  || '#999';
 
@@ -405,7 +423,6 @@
     const { bal, trans } = calcularDeudas();
     const total = gastos.reduce((s,g) => s+g.monto, 0);
 
-    // ── TAB PERSONAS ──
     const tabPersonas = `
       <div class="top-panel">
         <h2>👤 Agregar persona</h2>
@@ -429,7 +446,6 @@
             </div>`;
           }).join('')}</div>`}`;
 
-    // ── TAB GASTOS ──
     const tabGastos = people.length === 0
       ? `<div class="empty-state"><span class="emoji">👤</span>Primero agregá personas</div>`
       : `<div class="gastos-panel">
@@ -463,16 +479,13 @@
                 </div>
               </div>`).join('')}</div>`}`;
 
-    // ── TAB RESUMEN ──
     const tabResumen = gastos.length === 0
       ? `<div class="empty-state"><span class="emoji">📋</span>Cargá gastos para ver el resumen</div>`
       : `
-        ${total > 0 ? `
-        <div class="total-box">
+        ${total > 0 ? `<div class="total-box">
           <div><div class="t-label">Total gastado</div><div class="per-person">${people.length} personas</div></div>
           <div class="amount">${fmt(total)}</div>
         </div>` : ''}
-
         <div class="summary-box">
           <h2>🧾 Detalle por gasto</h2>
           ${gastos.map(g => {
@@ -483,23 +496,20 @@
                 <span class="gasto-resumen-monto">${fmt(g.monto)}</span>
               </div>
               <div class="gasto-resumen-pagador">Pagó: <strong style="color:${color(g.pagadorId)}">${nombre(g.pagadorId)}</strong> — ${(g.participantes||[]).length} participantes</div>
-              ${(g.participantes||[]).map(pid => {
-                const esPagador = pid === g.pagadorId;
-                return `<div class="parte-row">
+              ${(g.participantes||[]).map(pid => `
+                <div class="parte-row">
                   <div class="parte-nombre">
                     <span class="color-dot" style="background:${color(pid)}"></span>
                     ${nombre(pid)}
-                    ${esPagador ? `<span class="parte-pago">pagó</span>` : ''}
+                    ${pid === g.pagadorId ? `<span class="parte-pago">pagó</span>` : ''}
                   </div>
                   <div class="parte-monto">${fmt(parte)}</div>
-                </div>`;
-              }).join('')}
+                </div>`).join('')}
             </div>`;
           }).join('')}
         </div>
-
         <div class="summary-box">
-          <h2>📊 Balance total por persona</h2>
+          <h2>📊 Balance total</h2>
           ${people.map(p => {
             const b = bal[p.id] || 0;
             const c = b > 0.01 ? 'var(--accent3)' : b < -0.01 ? 'var(--accent)' : 'var(--muted)';
@@ -510,7 +520,6 @@
             </div>`;
           }).join('')}
         </div>
-
         ${trans.length > 0
           ? `<div class="transfers-box"><h2>💸 ¿Quién le paga a quién?</h2>
               ${trans.map(t => `<div class="transfer-row">
@@ -542,7 +551,6 @@
       <div>${tabActual==='personas'?tabPersonas:tabActual==='gastos'?tabGastos:tabResumen}</div>
       ${people.length>0||gastos.length>0?`<div class="reset-btn-wrap"><button class="btn btn-danger" id="btnReset">🗑️ Borrar todo</button></div>`:''}`;
 
-    // ── EVENTOS ──
     document.getElementById('btnBack').onclick   = volverCats;
     document.getElementById('btnLogout').onclick = salir;
     document.getElementById('btnReset')?.addEventListener('click', resetearTodo);
@@ -566,7 +574,6 @@
     document.getElementById('btnAgregarGasto')?.addEventListener('click', agregarGasto);
     document.querySelectorAll('.delete-btn[data-gasto-id]').forEach(b => b.onclick = () => eliminarGasto(Number(b.dataset.gastoId)));
 
-    // ── PARTICIPANTES ──
     document.querySelectorAll('.participante-check').forEach(btn => {
       btn.addEventListener('click', () => {
         const pid = Number(btn.dataset.pid);
