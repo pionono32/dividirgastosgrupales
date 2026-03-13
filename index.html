@@ -87,12 +87,9 @@
   .cat-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(180px, 1fr)); gap: 20px; }
   .cat-card { background: var(--card); border-radius: var(--radius); box-shadow: var(--shadow); padding: 32px 20px; text-align: center; cursor: pointer; border: 3px solid transparent; transition: transform 0.2s, border-color 0.2s, box-shadow 0.2s; animation: popIn 0.35s cubic-bezier(.175,.885,.32,1.275); }
   .cat-card:hover { transform: translateY(-6px); box-shadow: 0 16px 40px rgba(0,0,0,0.15); }
-  .cat-card.amigos { border-color: #ffb347; }
-  .cat-card.amigos:hover { background: #fff8f0; }
-  .cat-card.vacaciones { border-color: #4dc8f0; }
-  .cat-card.vacaciones:hover { background: #f0faff; }
-  .cat-card.cena { border-color: #9b59b6; }
-  .cat-card.cena:hover { background: #f9f0ff; }
+  .cat-card.amigos { border-color: #ffb347; } .cat-card.amigos:hover { background: #fff8f0; }
+  .cat-card.vacaciones { border-color: #4dc8f0; } .cat-card.vacaciones:hover { background: #f0faff; }
+  .cat-card.cena { border-color: #9b59b6; } .cat-card.cena:hover { background: #f9f0ff; }
   .cat-emoji { font-size: 3rem; display: block; margin-bottom: 12px; }
   .cat-title { font-family: 'Fredoka One', cursive; font-size: 1.2rem; margin-bottom: 6px; }
   .cat-desc  { font-size: 0.8rem; color: var(--muted); font-weight: 600; }
@@ -106,9 +103,9 @@
   .btn-logout { background: #f0f0f0; border: none; border-radius: 10px; padding: 7px 14px; font-family: 'Fredoka One', cursive; font-size: 0.85rem; cursor: pointer; color: var(--muted); transition: background 0.15s; }
   .btn-logout:hover { background: #ffe0e0; color: var(--accent); }
   .cat-badge { display: inline-flex; align-items: center; gap: 6px; padding: 6px 14px; border-radius: 50px; font-family: 'Fredoka One', cursive; font-size: 0.9rem; }
-  .cat-badge.amigos    { background: #fff0d0; color: #cc7700; }
+  .cat-badge.amigos { background: #fff0d0; color: #cc7700; }
   .cat-badge.vacaciones { background: #d0f0ff; color: #0077aa; }
-  .cat-badge.cena      { background: #f0d0ff; color: #7700cc; }
+  .cat-badge.cena { background: #f0d0ff; color: #7700cc; }
 
   .tabs { display: flex; margin-bottom: 24px; background: var(--card); border-radius: var(--radius); box-shadow: var(--shadow); overflow: hidden; border: 3px solid #f0f0f0; }
   .tab-btn { flex: 1; padding: 14px; border: none; background: transparent; font-family: 'Fredoka One', cursive; font-size: 1rem; cursor: pointer; color: var(--muted); transition: all 0.2s; border-bottom: 3px solid transparent; }
@@ -127,10 +124,9 @@
   input[type="text"]:focus, input[type="number"]:focus, select:focus { border-color: var(--accent4); background: #fff; }
 
   .participantes-wrap { margin-top: 14px; }
-  .participantes-wrap .part-label { font-size: 0.82rem; font-weight: 800; text-transform: uppercase; letter-spacing: 0.5px; color: var(--muted); margin-bottom: 10px; display: block; }
+  .part-label { font-size: 0.82rem; font-weight: 800; text-transform: uppercase; letter-spacing: 0.5px; color: var(--muted); margin-bottom: 10px; display: block; }
   .participantes-list { display: flex; flex-wrap: wrap; gap: 8px; }
-
-  .participante-check { display: inline-flex; align-items: center; gap: 6px; background: #f0f0f0; border-radius: 50px; padding: 8px 16px; cursor: pointer; transition: background 0.15s, color 0.15s; user-select: none; font-weight: 700; font-size: 0.9rem; border: 2px solid transparent; }
+  .participante-check { display: inline-flex; align-items: center; gap: 6px; border-radius: 50px; padding: 8px 16px; cursor: pointer; transition: background 0.15s, color 0.15s; user-select: none; font-weight: 700; font-size: 0.9rem; border: 2px solid transparent; }
   .participante-check.checked { background: var(--accent4); color: #fff; border-color: var(--accent4); }
   .participante-check:not(.checked) { background: #f0f0f0; color: var(--muted); }
 
@@ -187,7 +183,7 @@
   .summary-row { display: flex; justify-content: space-between; align-items: center; padding: 10px 0; border-bottom: 2px dashed #f0f0f0; font-weight: 700; }
   .summary-row:last-child { border-bottom: none; }
   .summary-name { display: flex; align-items: center; gap: 8px; font-size: 1rem; }
-  .summary-val  { font-family: 'Fredoka One', cursive; font-size: 1.2rem; color: var(--accent4); }
+  .summary-val { font-family: 'Fredoka One', cursive; font-size: 1.2rem; color: var(--accent4); }
 
   .transfers-box { background: var(--card); border-radius: var(--radius); box-shadow: var(--shadow); padding: 28px 32px; border: 3px solid var(--accent2); margin-bottom: 24px; }
   .transfers-box h2 { font-family: 'Fredoka One', cursive; font-size: 1.4rem; margin-bottom: 18px; color: var(--text); }
@@ -244,28 +240,22 @@
 
   const COLORS = ['#4d96ff','#ff6b6b','#6bcb77','#ffd93d','#c77dff','#ff9f43','#48dbfb','#ff6eb4'];
   const CATEGORIAS = {
-    amigos:     { label: 'Reunión con amigos', emoji: '🎉', desc: 'Juntadas, salidas, fiestas', clase: 'amigos' },
+    amigos:     { label: 'Reunión con amigos', emoji: '🎉', desc: 'Juntadas, salidas, fiestas',    clase: 'amigos' },
     vacaciones: { label: 'Vacaciones',          emoji: '🏖️', desc: 'Viajes, escapadas, aventuras', clase: 'vacaciones' },
-    cena:       { label: 'Cena / Restaurante',  emoji: '🍽️', desc: 'Salidas a comer, cenas', clase: 'cena' }
+    cena:       { label: 'Cena / Restaurante',  emoji: '🍽️', desc: 'Salidas a comer, cenas',       clase: 'cena' }
   };
 
-  let people  = [];
-  let gastos  = [];
-  let currentUser = null;
-  let categoriaActual = null;
-  let tabActual = 'personas';
+  let people = [], gastos = [], currentUser = null, categoriaActual = null, tabActual = 'personas';
 
   async function cargarDeFirestore(cat) {
-    const ref  = doc(db, 'usuarios', currentUser.uid, 'categorias', cat);
-    const snap = await getDoc(ref);
+    const snap = await getDoc(doc(db, 'usuarios', currentUser.uid, 'categorias', cat));
     if (snap.exists()) { people = snap.data().people || []; gastos = snap.data().gastos || []; }
     else { people = []; gastos = []; }
     renderApp();
   }
 
   async function guardarEnFirestore() {
-    const ref = doc(db, 'usuarios', currentUser.uid, 'categorias', categoriaActual);
-    await setDoc(ref, { people, gastos });
+    await setDoc(doc(db, 'usuarios', currentUser.uid, 'categorias', categoriaActual), { people, gastos });
     mostrarBadge();
   }
 
@@ -275,8 +265,8 @@
     else { document.body.className = 'default'; renderLogin(); }
   });
 
-  function loginConGoogle() { signInWithPopup(auth, new GoogleAuthProvider()).catch(err => alert('Error: ' + err.message)); }
-  function cerrarSesion() { signOut(auth); }
+  const loginConGoogle = () => signInWithPopup(auth, new GoogleAuthProvider()).catch(e => alert(e.message));
+  const cerrarSesion   = () => signOut(auth);
 
   function elegirCategoria(cat) {
     categoriaActual = cat; tabActual = 'personas';
@@ -291,34 +281,31 @@
   }
 
   function mostrarBadge() {
-    const badge = document.getElementById('savedBadge');
-    badge.classList.add('show');
-    setTimeout(() => badge.classList.remove('show'), 2000);
+    const b = document.getElementById('savedBadge');
+    b.classList.add('show');
+    setTimeout(() => b.classList.remove('show'), 2000);
   }
 
   function calcularDeudas() {
     const balance = {};
     people.forEach(p => balance[p.id] = 0);
     gastos.forEach(g => {
-      const n = g.participantes.length;
-      if (n === 0) return;
-      const parte = g.monto / n;
-      balance[g.pagadorId] = (balance[g.pagadorId] || 0) + g.monto;
-      g.participantes.forEach(pid => { balance[pid] = (balance[pid] || 0) - parte; });
+      const parte = g.monto / g.participantes.length;
+      balance[g.pagadorId] += g.monto;
+      g.participantes.forEach(pid => balance[pid] -= parte);
     });
-    const deudores   = Object.entries(balance).filter(([,v]) => v < -0.01).map(([id,v]) => ({ id, val: v })).sort((a,b) => a.val - b.val);
-    const acreedores = Object.entries(balance).filter(([,v]) => v > 0.01).map(([id,v])  => ({ id, val: v })).sort((a,b) => b.val - a.val);
-    const transferencias = [];
+    const deu = Object.entries(balance).filter(([,v]) => v < -0.01).map(([id,val]) => ({id, val})).sort((a,b) => a.val - b.val);
+    const acr = Object.entries(balance).filter(([,v]) => v >  0.01).map(([id,val]) => ({id, val})).sort((a,b) => b.val - a.val);
+    const trans = [];
     let i = 0, j = 0;
-    while (i < deudores.length && j < acreedores.length) {
-      const monto = Math.min(-deudores[i].val, acreedores[j].val);
-      transferencias.push({ de: deudores[i].id, a: acreedores[j].id, monto });
-      deudores[i].val  += monto;
-      acreedores[j].val -= monto;
-      if (Math.abs(deudores[i].val)  < 0.01) i++;
-      if (Math.abs(acreedores[j].val) < 0.01) j++;
+    while (i < deu.length && j < acr.length) {
+      const m = Math.min(-deu[i].val, acr[j].val);
+      trans.push({ de: deu[i].id, a: acr[j].id, monto: m });
+      deu[i].val += m; acr[j].val -= m;
+      if (Math.abs(deu[i].val) < 0.01) i++;
+      if (Math.abs(acr[j].val) < 0.01) j++;
     }
-    return { balance, transferencias };
+    return { balance, transferencias: trans };
   }
 
   function agregarPersona() {
@@ -331,7 +318,7 @@
 
   function eliminarPersona(id) {
     if (gastos.some(g => g.pagadorId === id || g.participantes.includes(id))) {
-      if (!confirm('Esta persona tiene gastos asociados. ¿Seguro?')) return;
+      if (!confirm('Esta persona tiene gastos. ¿Seguro?')) return;
       gastos = gastos.filter(g => g.pagadorId !== id);
       gastos.forEach(g => g.participantes = g.participantes.filter(p => p !== id));
     }
@@ -342,29 +329,28 @@
   function editarNombrePersona(id, el) {
     if (el.querySelector('input')) return;
     const p = people.find(x => x.id === id);
-    const input = document.createElement('input');
-    input.type = 'text'; input.value = p.nombre;
-    input.style.cssText = 'width:120px;padding:4px 8px;border:2px solid var(--accent);border-radius:8px;font-family:Fredoka One,cursive;font-size:0.95rem;outline:none;text-align:center;';
-    el.innerHTML = ''; el.appendChild(input); input.focus(); input.select();
-    const ok = () => { const v = input.value.trim(); if (v) p.nombre = v; guardarEnFirestore(); renderApp(); };
-    input.addEventListener('blur', ok);
-    input.addEventListener('keydown', e => { if (e.key === 'Enter') { e.preventDefault(); ok(); } if (e.key === 'Escape') renderApp(); });
+    const inp = document.createElement('input');
+    inp.type = 'text'; inp.value = p.nombre;
+    inp.style.cssText = 'width:120px;padding:4px 8px;border:2px solid var(--accent);border-radius:8px;font-family:Fredoka One,cursive;font-size:0.95rem;outline:none;text-align:center;';
+    el.innerHTML = ''; el.appendChild(inp); inp.focus(); inp.select();
+    const ok = () => { const v = inp.value.trim(); if (v) p.nombre = v; guardarEnFirestore(); renderApp(); };
+    inp.addEventListener('blur', ok);
+    inp.addEventListener('keydown', e => { if (e.key === 'Enter') { e.preventDefault(); ok(); } if (e.key === 'Escape') renderApp(); });
   }
 
   function agregarGasto() {
-    const nombre = document.getElementById('gastoNombre').value.trim();
-    const monto  = parseFloat(document.getElementById('gastoMonto').value);
+    const nombre    = document.getElementById('gastoNombre').value.trim();
+    const monto     = parseFloat(document.getElementById('gastoMonto').value);
     const pagadorId = Number(document.getElementById('gastoPagador').value);
-
-    // Leer participantes desde el estado interno, no del DOM
+    // ── FIX: leer participantes por data-checked ──
     const participantes = people
-      .filter(p => document.getElementById('part-' + p.id)?.dataset.checked === 'true')
+      .filter(p => document.getElementById('part-' + p.id)?.dataset.checked !== 'false')
       .map(p => p.id);
 
-    if (!nombre) { alert('¡Escribí un nombre para el gasto!'); return; }
-    if (!monto || monto <= 0) { alert('¡Escribí un monto válido!'); return; }
-    if (!pagadorId) { alert('¡Elegí quién pagó!'); return; }
-    if (participantes.length === 0) { alert('¡Elegí al menos un participante!'); return; }
+    if (!nombre)              { alert('¡Escribí un nombre!'); return; }
+    if (!monto || monto <= 0) { alert('¡Monto inválido!'); return; }
+    if (!pagadorId)           { alert('¡Elegí quién pagó!'); return; }
+    if (!participantes.length){ alert('¡Elegí al menos un participante!'); return; }
 
     gastos.push({ id: Date.now(), nombre, monto, pagadorId, participantes });
     document.getElementById('gastoNombre').value = '';
@@ -372,41 +358,36 @@
     guardarEnFirestore(); renderApp();
   }
 
-  function eliminarGasto(id) {
-    gastos = gastos.filter(g => g.id !== id);
-    guardarEnFirestore(); renderApp();
-  }
+  const eliminarGasto = id => { gastos = gastos.filter(g => g.id !== id); guardarEnFirestore(); renderApp(); };
 
   async function resetearTodo() {
-    if (!confirm('¿Seguro que querés borrar todo?')) return;
+    if (!confirm('¿Borrar todo?')) return;
     people = []; gastos = [];
     await guardarEnFirestore(); renderApp();
   }
 
-  function stickmanHTML(p) {
+  function stickman(p) {
     const c = p.color;
-    const fotoContent = p.foto ? `<img src="${p.foto}" alt="${p.nombre}">` : `<div class="face-placeholder">🙂</div>`;
-    return `
-      <div class="stickman-wrap" data-foto="${p.id}" title="Clic para subir foto">
-        <div class="face-circle">${fotoContent}</div>
-        <svg class="stickman-svg" viewBox="0 0 90 110" xmlns="http://www.w3.org/2000/svg">
-          <line x1="45" y1="0"  x2="45" y2="12" stroke="${c}" stroke-width="4" stroke-linecap="round"/>
-          <line x1="45" y1="12" x2="45" y2="60" stroke="${c}" stroke-width="4" stroke-linecap="round"/>
-          <line x1="45" y1="22" x2="15" y2="45" stroke="${c}" stroke-width="4" stroke-linecap="round"/>
-          <line x1="45" y1="22" x2="75" y2="45" stroke="${c}" stroke-width="4" stroke-linecap="round"/>
-          <line x1="45" y1="60" x2="22" y2="95" stroke="${c}" stroke-width="4" stroke-linecap="round"/>
-          <line x1="45" y1="60" x2="68" y2="95" stroke="${c}" stroke-width="4" stroke-linecap="round"/>
-          <line x1="22" y1="95" x2="10" y2="100" stroke="${c}" stroke-width="3.5" stroke-linecap="round"/>
-          <line x1="68" y1="95" x2="80" y2="100" stroke="${c}" stroke-width="3.5" stroke-linecap="round"/>
-        </svg>
-        <div class="avatar-hint">📷 Foto</div>
-        <input type="file" id="file-${p.id}" class="hidden-input" accept="image/*">
-      </div>`;
+    return `<div class="stickman-wrap" data-foto="${p.id}">
+      <div class="face-circle">${p.foto ? `<img src="${p.foto}">` : `<div class="face-placeholder">🙂</div>`}</div>
+      <svg class="stickman-svg" viewBox="0 0 90 110" xmlns="http://www.w3.org/2000/svg">
+        <line x1="45" y1="0"  x2="45" y2="12" stroke="${c}" stroke-width="4" stroke-linecap="round"/>
+        <line x1="45" y1="12" x2="45" y2="60" stroke="${c}" stroke-width="4" stroke-linecap="round"/>
+        <line x1="45" y1="22" x2="15" y2="45" stroke="${c}" stroke-width="4" stroke-linecap="round"/>
+        <line x1="45" y1="22" x2="75" y2="45" stroke="${c}" stroke-width="4" stroke-linecap="round"/>
+        <line x1="45" y1="60" x2="22" y2="95" stroke="${c}" stroke-width="4" stroke-linecap="round"/>
+        <line x1="45" y1="60" x2="68" y2="95" stroke="${c}" stroke-width="4" stroke-linecap="round"/>
+        <line x1="22" y1="95" x2="10" y2="100" stroke="${c}" stroke-width="3.5" stroke-linecap="round"/>
+        <line x1="68" y1="95" x2="80" y2="100" stroke="${c}" stroke-width="3.5" stroke-linecap="round"/>
+      </svg>
+      <div class="avatar-hint">📷 Foto</div>
+      <input type="file" id="file-${p.id}" class="hidden-input" accept="image/*">
+    </div>`;
   }
 
-  function formatMoney(n) { return '$' + n.toLocaleString('es-AR', { minimumFractionDigits: 2, maximumFractionDigits: 2 }); }
-  function nombrePorId(id) { return people.find(p => p.id === id)?.nombre || '?'; }
-  function colorPorId(id)  { return people.find(p => p.id === id)?.color  || '#999'; }
+  const fmt  = n  => '$' + n.toLocaleString('es-AR', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
+  const name = id => people.find(p => p.id === id)?.nombre || '?';
+  const col  = id => people.find(p => p.id === id)?.color  || '#999';
 
   function renderLogin() {
     document.getElementById('app').innerHTML = `
@@ -414,11 +395,11 @@
         <h2>👋 Bienvenido!</h2>
         <p>Iniciá sesión para guardar y ver tus gastos</p>
         <button class="btn-google" id="btnGoogle">
-          <img src="https://www.gstatic.com/firebasejs/ui/2.0.0/images/auth/google.svg" alt="Google">
+          <img src="https://www.gstatic.com/firebasejs/ui/2.0.0/images/auth/google.svg">
           Continuar con Google
         </button>
       </div>`;
-    document.getElementById('btnGoogle').addEventListener('click', loginConGoogle);
+    document.getElementById('btnGoogle').onclick = loginConGoogle;
   }
 
   function renderCategorias() {
@@ -426,7 +407,7 @@
       <div class="user-bar">
         <div></div>
         <div class="user-bar-right">
-          <img src="${currentUser.photoURL}" alt="">
+          <img src="${currentUser.photoURL}">
           <span class="user-name">${currentUser.displayName}</span>
           <button class="btn-logout" id="btnLogout">Salir</button>
         </div>
@@ -435,85 +416,64 @@
         <h2>¿Qué vas a dividir hoy?</h2>
         <p class="cat-sub">Elegí una categoría para empezar</p>
         <div class="cat-grid">
-          ${Object.entries(CATEGORIAS).map(([key, cat]) => `
-            <div class="cat-card ${cat.clase}" data-cat="${key}">
-              <span class="cat-emoji">${cat.emoji}</span>
-              <div class="cat-title">${cat.label}</div>
-              <div class="cat-desc">${cat.desc}</div>
+          ${Object.entries(CATEGORIAS).map(([k,c]) => `
+            <div class="cat-card ${c.clase}" data-cat="${k}">
+              <span class="cat-emoji">${c.emoji}</span>
+              <div class="cat-title">${c.label}</div>
+              <div class="cat-desc">${c.desc}</div>
             </div>`).join('')}
         </div>
       </div>`;
-    document.getElementById('btnLogout').addEventListener('click', cerrarSesion);
-    document.querySelectorAll('.cat-card').forEach(card => {
-      card.addEventListener('click', () => elegirCategoria(card.dataset.cat));
-    });
+    document.getElementById('btnLogout').onclick = cerrarSesion;
+    document.querySelectorAll('.cat-card').forEach(c => c.onclick = () => elegirCategoria(c.dataset.cat));
   }
 
   function renderApp() {
     const cat = CATEGORIAS[categoriaActual];
     const { balance, transferencias } = calcularDeudas();
-    const totalGastado = gastos.reduce((s, g) => s + g.monto, 0);
+    const total = gastos.reduce((s,g) => s + g.monto, 0);
 
-    // ── TAB PERSONAS ──
     const tabPersonas = `
       <div class="top-panel">
         <h2>👤 Agregar persona</h2>
         <div class="input-row">
-          <div class="input-group">
-            <label>Nombre</label>
-            <input type="text" id="inputNombre" placeholder="Ej: Martín" />
-          </div>
+          <div class="input-group"><label>Nombre</label><input type="text" id="inputNombre" placeholder="Ej: Martín"/></div>
           <button class="btn btn-primary" id="btnAgregarPersona">Agregar</button>
         </div>
       </div>
       ${people.length === 0
         ? `<div class="empty-state"><span class="emoji">👤</span>Agregá personas para empezar</div>`
         : `<div class="people-grid">${people.map(p => {
-            const bal = balance[p.id] || 0;
-            const balLabel = bal > 0.01
-              ? `<span class="person-balance balance-pos">Le deben ${formatMoney(bal)}</span>`
-              : bal < -0.01
-              ? `<span class="person-balance balance-neg">Debe ${formatMoney(Math.abs(bal))}</span>`
-              : `<span class="person-balance balance-neu">Está al día ✓</span>`;
+            const b = balance[p.id] || 0;
+            const bl = b > 0.01 ? `<span class="person-balance balance-pos">Le deben ${fmt(b)}</span>`
+                     : b < -0.01 ? `<span class="person-balance balance-neg">Debe ${fmt(Math.abs(b))}</span>`
+                     : `<span class="person-balance balance-neu">Al día ✓</span>`;
             return `<div class="person-card">
               <button class="delete-btn" data-id="${p.id}">✕</button>
-              ${stickmanHTML(p)}
+              ${stickman(p)}
               <div class="person-name" data-edit-nombre="${p.id}">${p.nombre} ✏️</div>
-              ${gastos.length > 0 ? balLabel : ''}
+              ${gastos.length > 0 ? bl : ''}
             </div>`;
           }).join('')}</div>`}`;
 
-    // ── TAB GASTOS ──
     const tabGastos = people.length === 0
       ? `<div class="empty-state"><span class="emoji">👤</span>Primero agregá personas</div>`
       : `<div class="gastos-panel">
           <h2>🧾 Agregar gasto</h2>
           <div class="input-row" style="margin-bottom:14px">
-            <div class="input-group">
-              <label>Descripción</label>
-              <input type="text" id="gastoNombre" placeholder="Ej: Vino, Pizza..." />
-            </div>
-            <div class="input-group" style="max-width:160px">
-              <label>Monto ($)</label>
-              <input type="number" id="gastoMonto" placeholder="0.00" min="0" step="0.01" />
-            </div>
-            <div class="input-group" style="max-width:160px">
-              <label>¿Quién pagó?</label>
+            <div class="input-group"><label>Descripción</label><input type="text" id="gastoNombre" placeholder="Ej: Vino, Pizza..."/></div>
+            <div class="input-group" style="max-width:160px"><label>Monto ($)</label><input type="number" id="gastoMonto" placeholder="0.00" min="0" step="0.01"/></div>
+            <div class="input-group" style="max-width:160px"><label>¿Quién pagó?</label>
               <select id="gastoPagador"><option value="">Elegir...</option>${people.map(p => `<option value="${p.id}">${p.nombre}</option>`).join('')}</select>
             </div>
           </div>
           <div class="participantes-wrap">
             <span class="part-label">¿Quiénes participaron?</span>
             <div class="participantes-list">
-              ${people.map(p => `
-                <div class="participante-check checked" id="part-${p.id}" data-checked="true" data-pid="${p.id}">
-                  ${p.nombre}
-                </div>`).join('')}
+              ${people.map(p => `<div class="participante-check checked" id="part-${p.id}" data-checked="true" data-pid="${p.id}">${p.nombre}</div>`).join('')}
             </div>
           </div>
-          <div style="margin-top:16px">
-            <button class="btn btn-primary" id="btnAgregarGasto">Agregar gasto</button>
-          </div>
+          <div style="margin-top:16px"><button class="btn btn-primary" id="btnAgregarGasto">Agregar gasto</button></div>
         </div>
         ${gastos.length === 0
           ? `<div class="empty-state"><span class="emoji">🧾</span>No hay gastos todavía</div>`
@@ -521,49 +481,36 @@
               <div class="gasto-item">
                 <div class="gasto-info">
                   <div class="gasto-nombre">${g.nombre}</div>
-                  <div class="gasto-detalle">
-                    Pagó: <strong style="color:${colorPorId(g.pagadorId)}">${nombrePorId(g.pagadorId)}</strong> •
-                    Participantes: ${g.participantes.map(pid => `<span class="participante-chip">${nombrePorId(pid)}</span>`).join('')}
-                  </div>
+                  <div class="gasto-detalle">Pagó: <strong style="color:${col(g.pagadorId)}">${name(g.pagadorId)}</strong> • ${g.participantes.map(pid => `<span class="participante-chip">${name(pid)}</span>`).join('')}</div>
                 </div>
                 <div style="display:flex;align-items:center;gap:10px">
-                  <div class="gasto-monto">${formatMoney(g.monto)}</div>
+                  <div class="gasto-monto">${fmt(g.monto)}</div>
                   <button class="delete-btn" style="position:relative;top:0;right:0" data-gasto-id="${g.id}">✕</button>
                 </div>
               </div>`).join('')}</div>`}`;
 
-    // ── TAB RESUMEN ──
     const tabResumen = gastos.length === 0
       ? `<div class="empty-state"><span class="emoji">📋</span>Cargá gastos para ver el resumen</div>`
-      : `${totalGastado > 0 ? `
-        <div class="total-box">
-          <div><div class="label">Total gastado</div><div class="per-person">${people.length} personas</div></div>
-          <div class="amount">${formatMoney(totalGastado)}</div>
-        </div>` : ''}
-        <div class="summary-box">
-          <h2>📊 Balance por persona</h2>
-          ${people.map(p => {
-            const bal = balance[p.id] || 0;
-            const color = bal > 0.01 ? 'var(--accent3)' : bal < -0.01 ? 'var(--accent)' : 'var(--muted)';
-            const label = bal > 0.01 ? `le deben ${formatMoney(bal)}` : bal < -0.01 ? `debe ${formatMoney(Math.abs(bal))}` : 'está al día ✓';
-            return `<div class="summary-row">
-              <div class="summary-name"><span class="color-dot" style="background:${p.color}"></span>${p.nombre}</div>
-              <div style="text-align:right;font-family:'Fredoka One',cursive;color:${color}">${label}</div>
-            </div>`;
-          }).join('')}
-        </div>
-        ${transferencias.length > 0
-          ? `<div class="transfers-box">
-              <h2>💸 ¿Quién le paga a quién?</h2>
-              ${transferencias.map(t => `
-                <div class="transfer-row">
-                  <span class="transfer-from">${nombrePorId(Number(t.de))}</span>
-                  <span class="transfer-arrow">→</span>
-                  <span class="transfer-to">${nombrePorId(Number(t.a))}</span>
-                  <span class="transfer-amount">${formatMoney(t.monto)}</span>
-                </div>`).join('')}
-            </div>`
-          : `<div class="empty-state"><span class="emoji">✅</span>¡Todos están al día!</div>`}`;
+      : `${total > 0 ? `<div class="total-box"><div><div class="label">Total gastado</div><div class="per-person">${people.length} personas</div></div><div class="amount">${fmt(total)}</div></div>` : ''}
+         <div class="summary-box"><h2>📊 Balance por persona</h2>
+           ${people.map(p => {
+             const b = balance[p.id] || 0;
+             const color = b > 0.01 ? 'var(--accent3)' : b < -0.01 ? 'var(--accent)' : 'var(--muted)';
+             const lbl   = b > 0.01 ? `le deben ${fmt(b)}` : b < -0.01 ? `debe ${fmt(Math.abs(b))}` : 'al día ✓';
+             return `<div class="summary-row"><div class="summary-name"><span class="color-dot" style="background:${p.color}"></span>${p.nombre}</div><div style="font-family:'Fredoka One',cursive;color:${color}">${lbl}</div></div>`;
+           }).join('')}
+         </div>
+         ${transferencias.length > 0
+           ? `<div class="transfers-box"><h2>💸 ¿Quién le paga a quién?</h2>
+               ${transferencias.map(t => `
+                 <div class="transfer-row">
+                   <span class="transfer-from">${name(Number(t.de))}</span>
+                   <span class="transfer-arrow">→</span>
+                   <span class="transfer-to">${name(Number(t.a))}</span>
+                   <span class="transfer-amount">${fmt(t.monto)}</span>
+                 </div>`).join('')}
+              </div>`
+           : `<div class="empty-state"><span class="emoji">✅</span>¡Todos al día!</div>`}`;
 
     document.getElementById('app').innerHTML = `
       <div class="user-bar">
@@ -572,7 +519,7 @@
           <span class="cat-badge ${cat.clase}">${cat.emoji} ${cat.label}</span>
         </div>
         <div class="user-bar-right">
-          <img src="${currentUser.photoURL}" alt="">
+          <img src="${currentUser.photoURL}">
           <span class="user-name">${currentUser.displayName}</span>
           <button class="btn-logout" id="btnLogout">Salir</button>
         </div>
@@ -582,61 +529,40 @@
         <button class="tab-btn ${tabActual==='gastos'?'active':''}" data-tab="gastos">🧾 Gastos</button>
         <button class="tab-btn ${tabActual==='resumen'?'active':''}" data-tab="resumen">📋 Resumen</button>
       </div>
-      <div id="tabContent">
-        ${tabActual === 'personas' ? tabPersonas : tabActual === 'gastos' ? tabGastos : tabResumen}
-      </div>
-      ${people.length > 0 || gastos.length > 0 ? `
-      <div class="reset-btn-wrap">
-        <button class="btn btn-danger" id="btnReset">🗑️ Borrar todo</button>
-      </div>` : ''}
-    `;
+      <div>${tabActual==='personas' ? tabPersonas : tabActual==='gastos' ? tabGastos : tabResumen}</div>
+      ${people.length > 0 || gastos.length > 0 ? `<div class="reset-btn-wrap"><button class="btn btn-danger" id="btnReset">🗑️ Borrar todo</button></div>` : ''}`;
 
-    // ── EVENTOS ──
-    document.getElementById('btnBack').addEventListener('click', volverACategorias);
-    document.getElementById('btnLogout').addEventListener('click', cerrarSesion);
+    // Eventos
+    document.getElementById('btnBack').onclick    = volverACategorias;
+    document.getElementById('btnLogout').onclick  = cerrarSesion;
     document.getElementById('btnReset')?.addEventListener('click', resetearTodo);
-    document.querySelectorAll('.tab-btn').forEach(btn => {
-      btn.addEventListener('click', () => { tabActual = btn.dataset.tab; renderApp(); });
-    });
+    document.querySelectorAll('.tab-btn').forEach(b => b.onclick = () => { tabActual = b.dataset.tab; renderApp(); });
 
-    // Personas
     document.getElementById('btnAgregarPersona')?.addEventListener('click', agregarPersona);
-    document.getElementById('inputNombre')?.addEventListener('keydown', e => { if (e.key === 'Enter') agregarPersona(); });
-    document.querySelectorAll('.delete-btn[data-id]').forEach(btn => {
-      btn.addEventListener('click', () => eliminarPersona(Number(btn.dataset.id)));
-    });
-    document.querySelectorAll('[data-edit-nombre]').forEach(el => {
-      el.addEventListener('click', () => editarNombrePersona(Number(el.dataset.editNombre), el));
-    });
-    document.querySelectorAll('[data-foto]').forEach(wrap => {
-      wrap.addEventListener('click', () => document.getElementById('file-' + wrap.dataset.foto)?.click());
-    });
-    document.querySelectorAll('[id^="file-"]').forEach(input => {
-      input.addEventListener('change', () => {
-        const id = Number(input.id.replace('file-', ''));
-        const file = input.files[0];
-        if (!file) return;
-        const reader = new FileReader();
-        reader.onload = e => {
-          const p = people.find(x => x.id === id);
-          if (p) { p.foto = e.target.result; guardarEnFirestore(); renderApp(); }
-        };
-        reader.readAsDataURL(file);
-      });
-    });
-
-    // Gastos — participantes con data-checked
-    document.querySelectorAll('.participante-check').forEach(btn => {
-      btn.addEventListener('click', () => {
-        const isChecked = btn.dataset.checked === 'true';
-        btn.dataset.checked = isChecked ? 'false' : 'true';
-        btn.classList.toggle('checked', !isChecked);
-      });
+    document.getElementById('inputNombre')?.addEventListener('keydown', e => { if (e.key==='Enter') agregarPersona(); });
+    document.querySelectorAll('.delete-btn[data-id]').forEach(b => b.onclick = () => eliminarPersona(Number(b.dataset.id)));
+    document.querySelectorAll('[data-edit-nombre]').forEach(el => el.onclick = () => editarNombrePersona(Number(el.dataset.editNombre), el));
+    document.querySelectorAll('[data-foto]').forEach(w => w.onclick = () => document.getElementById('file-' + w.dataset.foto)?.click());
+    document.querySelectorAll('[id^="file-"]').forEach(inp => {
+      inp.onchange = () => {
+        const id = Number(inp.id.replace('file-', ''));
+        const file = inp.files[0]; if (!file) return;
+        const r = new FileReader();
+        r.onload = e => { const p = people.find(x => x.id===id); if (p) { p.foto = e.target.result; guardarEnFirestore(); renderApp(); } };
+        r.readAsDataURL(file);
+      };
     });
 
     document.getElementById('btnAgregarGasto')?.addEventListener('click', agregarGasto);
-    document.querySelectorAll('.delete-btn[data-gasto-id]').forEach(btn => {
-      btn.addEventListener('click', () => eliminarGasto(Number(btn.dataset.gastoId)));
+    document.querySelectorAll('.delete-btn[data-gasto-id]').forEach(b => b.onclick = () => eliminarGasto(Number(b.dataset.gastoId)));
+
+    // ── FIX PARTICIPANTES ──
+    document.querySelectorAll('.participante-check').forEach(btn => {
+      btn.addEventListener('click', () => {
+        const activo = btn.dataset.checked !== 'false';
+        btn.dataset.checked = activo ? 'false' : 'true';
+        btn.classList.toggle('checked', !activo);
+      });
     });
   }
 </script>
