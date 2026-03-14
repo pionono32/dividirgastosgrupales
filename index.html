@@ -181,7 +181,7 @@
 
 <script type="module">
   import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js";
-  import { getAuth, GoogleAuthProvider, signInWithPopup, signInWithRedirect, getRedirectResult, signOut, onAuthStateChanged }
+  import { getAuth, GoogleAuthProvider, signInWithPopup, signOut, onAuthStateChanged }
     from "https://www.gstatic.com/firebasejs/10.12.0/firebase-auth.js";
   import { getFirestore, doc, getDoc, setDoc }
     from "https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js";
@@ -209,9 +209,6 @@
   let people = [], gastos = [], currentUser = null, catActual = null, tabActual = 'personas';
   let estadoPart = {};
 
-  // Detectar Safari
-  const esSafari = /^((?!chrome|android).)*safari/i.test(navigator.userAgent);
-
   async function cargar(cat) {
     try {
       const snap = await getDoc(doc(db, 'usuarios', currentUser.uid, 'categorias', cat));
@@ -238,38 +235,13 @@
     people.forEach(p => estadoPart[p.id] = true);
   }
 
-  // ── AUTH ──
-  onAuthStateChanged(auth, async u => {
-    if (u) {
-      currentUser = u;
-      catActual = null;
-      renderCategorias();
-    } else {
-      // Intentar recuperar sesión de redirect (para navegadores que no son Safari)
-      try {
-        const result = await getRedirectResult(auth);
-        if (result && result.user) {
-          currentUser = result.user;
-          catActual = null;
-          renderCategorias();
-          return;
-        }
-      } catch(e) {}
-      document.body.className = 'default';
-      renderLogin();
-    }
+  onAuthStateChanged(auth, u => {
+    currentUser = u;
+    if (u) { catActual = null; renderCategorias(); }
+    else { document.body.className = 'default'; renderLogin(); }
   });
 
-  // Safari usa popup, el resto usa redirect
-  const loginGoogle = () => {
-    const provider = new GoogleAuthProvider();
-    if (esSafari) {
-      signInWithPopup(auth, provider).catch(e => alert('Error: ' + e.message));
-    } else {
-      signInWithRedirect(auth, provider);
-    }
-  };
-
+  const loginGoogle  = () => signInWithPopup(auth, new GoogleAuthProvider()).catch(e => alert('Error: ' + e.message));
   const salir        = () => signOut(auth);
   const mostrarBadge = () => { const b = document.getElementById('savedBadge'); b.classList.add('show'); setTimeout(() => b.classList.remove('show'), 2000); };
 
